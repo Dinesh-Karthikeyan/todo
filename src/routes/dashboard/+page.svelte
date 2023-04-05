@@ -13,8 +13,30 @@
 				id: uid()
 			};
 			todos = [...todos, todoTask];
+			task = '';
 		}
 	}
+
+	function handleAdd() {
+		const todoTask = {
+			task: task,
+			done: false,
+			id: uid()
+		};
+		todos = [...todos, todoTask];
+		task = '';
+	}
+    function deletItem(id) {
+        todos = todos.filter(item => item.id != id)
+    }
+    function doEdit(id) {
+        todos.forEach(item => {
+            if (item.id === id) {
+                task = item.task;
+            }
+        })
+        deletItem(id);
+    }
 </script>
 
 <main>
@@ -24,7 +46,7 @@
 	<form>
 		<label>
 			<input bind:value={task} on:keydown={addTask} type="text" />
-			<button><img src="/dashboard/add.png" alt="add icon" /></button>
+			<button on:click={handleAdd}><img src="/dashboard/add.png" alt="add icon" /></button>
 		</label>
 	</form>
 	<div>
@@ -35,8 +57,8 @@
 				</span>
 				<span>{todo.task}</span>
 				<span>
-					<img src="/dashboard/edit.png" alt="edit icon" />
-					<img src="/dashboard/delete.png" alt="delete icon" />
+					<img src="/dashboard/edit.png" alt="edit icon" on:click={() => {doEdit(todo.id)}} on:keydown={()=>{}}/>
+					<img src="/dashboard/delete.png" alt="delete icon" on:click={() => {deletItem(todo.id)}} on:keydown={()=>{}}/>
 				</span>
 			</div>
 		{/each}
