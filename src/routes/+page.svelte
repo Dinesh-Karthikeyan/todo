@@ -13,14 +13,14 @@
 	{/if}
 	<form>
 		<label>
-			<input type="email" name="email" id="email" placeholder="Enter your email" />
+			<input bind:value={email} type="email" name="email" id="email" placeholder="Enter your email" />
 		</label>
 		<label>
-			<input type="password" name="password" id="password" placeholder="Enter your password" />
+			<input bind:value={password} type="password" name="password" id="password" placeholder="Enter your password" />
 		</label>
 		{#if isNewUser}
 			<label>
-				<input
+				<input bind:value={confirmPass}
 					type="password"
 					name="confirmPass"
 					id="confirmPass"
