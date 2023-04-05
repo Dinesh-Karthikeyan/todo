@@ -46,7 +46,7 @@
 	<form>
 		<label>
 			<input bind:value={task} on:keydown={addTask} type="text" />
-			<button on:click={handleAdd}><img src="/dashboard/add.png" alt="add icon" /></button>
+			<button ><img on:click={handleAdd} on:keydown={()=>{}} src="/dashboard/add.png" alt="add icon" /></button>
 		</label>
 	</form>
 	<div>
