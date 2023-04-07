@@ -9,9 +9,11 @@
 			const currentPath = window.location.pathname;
 			if (!user && !nonAuthRoutes.includes(currentPath)) {
 				window.location.href = '/';
+                return
 			}
 			if (user && currentPath === '/') {
 				window.location.href = '/dashboard';
+                return
 			}
 
 			if (!user) return;
