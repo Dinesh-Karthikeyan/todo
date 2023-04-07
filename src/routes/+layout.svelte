@@ -3,16 +3,16 @@
 	import { auth, db } from '$lib/firebase/firebase';
     import {doc, getDoc, setDoc} from 'firebase/firestore';
 	import {authStore} from '../stores/store'
-    // const nonAuthRoutes = ['/'];
+    const nonAuthRoutes = ['/'];
 	onMount(() => {
 		const unsubscribe = auth.onAuthStateChanged(async (user) => {
-			// const currentPath = window.location.pathname;
-			// if (!user && !nonAuthRoutes.includes(currentPath)) {
-			// 	window.location.href = '/';
-			// }
-			// if (user && currentPath === '/') {
-			// 	window.location.href = '/dashboard';
-			// }
+			const currentPath = window.location.pathname;
+			if (!user && !nonAuthRoutes.includes(currentPath)) {
+				window.location.href = '/';
+			}
+			if (user && currentPath === '/') {
+				window.location.href = '/dashboard';
+			}
 
 			if (!user) return;
 
