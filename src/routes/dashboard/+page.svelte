@@ -6,7 +6,7 @@
 	let task = '';
 	// let todos  = $authStore.data.todo;
 
-	$: $authStore.data.todo = todos
+	// $: $authStore.data.todo = todos
 	
 	function addTask(event) {
 		if (event.key === 'Enter') {
