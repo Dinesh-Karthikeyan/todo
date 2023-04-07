@@ -5,7 +5,7 @@
 
 	let task = '';
 	// let todos  = $authStore.data.todo;
-
+	let todos = [];
 	// $: $authStore.data.todo = todos
 	
 	function addTask(event) {
