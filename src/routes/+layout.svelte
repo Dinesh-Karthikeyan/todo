@@ -27,12 +27,11 @@
             }
             const docRef = doc(db,'users',user.uid);
             if(!docSnap) {
-                const userRef = doc(db, 'user', user.uid);
                 dataToSetToDb = {
                     email:user.email,
                     todo: []
                 }
-                await setDoc(userRef, dataToSetToDb)
+                await setDoc(docRef, dataToSetToDb)
             }
             else {
                 dataToSetToDb = docSnap.data;
