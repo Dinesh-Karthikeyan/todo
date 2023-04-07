@@ -1,6 +1,6 @@
 <script>
 	import ShortUniqueId from 'short-unique-id';
-	import {authStore, authHandler} from '../../stores/store'
+	import {authStore, authHandler, dbHandler} from '../../stores/store'
 	const uid = new ShortUniqueId();
 
 	let task = '';
@@ -18,9 +18,10 @@
 			todos = [todoTask, ...todos];
 			// $authStore.data.todo = todos;
 			task = '';
+			dbHandler.updateDoc('users',$authStore.user.uid, $authStore.data.todo)
 		}
 	}
-
+	
 	function handleAdd() {
 		const todoTask = {
 			task: task,
@@ -29,6 +30,7 @@
 		};
 		todos = [todoTask, ...todos];
 		task = '';
+		dbHandler.updateDoc('users',$authStore.user.uid, $authStore.data.todo)
 	}
 	function deletItem(id) {
 		todos = todos.filter((item) => item.id != id);

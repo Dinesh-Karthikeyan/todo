@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
-import { auth } from "../lib/firebase/firebase";
+import { auth, db } from "../lib/firebase/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, updateDoc } from "@firebase/firestore";
 
 export const authStore = writable({
     user: null,
@@ -19,3 +20,9 @@ export const authHandler = {
         await signOut(auth);
     }
 };
+
+export const dbHandler = {
+    updateDoc: async(collection, document, data) => {
+        await updateDoc(doc(db, collection, document), data)
+    }
+}
