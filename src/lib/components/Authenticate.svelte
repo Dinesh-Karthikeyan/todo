@@ -1,4 +1,5 @@
-<script lang="ts">
+<script>
+	import {authHandler} from '../../stores/store'
 	let email = '';
 	let password = '';
 	let confirmPass = '';
@@ -6,9 +7,15 @@
 	let isNewUser = false;
 	let error = false;
 	function handleSubmit() {
-		if (!email || !password || (isNewUser && !confirmPass)) {
+		if (!isNewUser && email!="" && password != '') {
+			authHandler.login(email, password);
+		}
+		if (isNewUser && confirmPass === password && email != '' && password != '') {
+			authHandler.signin(email, password);
+		}
+		else {
 			error = true;
-			return;
+			return
 		}
 	}
 </script>
