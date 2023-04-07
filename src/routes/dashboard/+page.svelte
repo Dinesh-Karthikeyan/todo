@@ -1,10 +1,10 @@
 <script>
 	import ShortUniqueId from 'short-unique-id';
-	import {authStore} from '../../stores/store'
+	// import {authStore} from '../../stores/store'
 	const uid = new ShortUniqueId();
 
 	let task = '';
-	let todos  = $authStore.data.todo;
+	// let todos  = $authStore.data.todo;
 
 	$: $authStore.data.todo = todos
 	
@@ -16,7 +16,7 @@
 				id: uid()
 			};
 			todos = [todoTask, ...todos];
-			$authStore.data.todo = todos;
+			// $authStore.data.todo = todos;
 			task = '';
 		}
 	}
