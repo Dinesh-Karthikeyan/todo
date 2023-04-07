@@ -134,6 +134,8 @@
 		padding: 0 6px;
 		font-size: 0.8 rem;
 		background-color: white;
+		padding: 2px;
+		margin-left: 10px;
 	}
 	.above {
 		top: 0;
