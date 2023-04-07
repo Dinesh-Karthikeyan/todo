@@ -16,6 +16,7 @@
 
 			if (!user) return;
 
+            console.log(user.email);
             let dataToSetToDb;
             const docRef = doc(db,'users',user.uid);
             const docSnap = await getDoc(db, docRef);
