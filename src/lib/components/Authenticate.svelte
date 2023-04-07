@@ -156,6 +156,8 @@
 	.error {
 		font-size: 0.9 rem;
 		color: coral;
+		margin: 5px;
+		padding: 5px;
 	}
 	.options {
 		padding: 14px 0;
