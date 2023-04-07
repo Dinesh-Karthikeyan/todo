@@ -17,7 +17,7 @@
             }
 
 			if (!user) return;
-
+            
             console.log(user.email);
             let dataToSetToDb;
             const docRef = doc(db,'users',user.uid);
@@ -28,7 +28,12 @@
                     email:user.email,
                     todo: []
                 }
+                try {
                 await setDoc(userRef, dataToSetToDb)
+                }
+                catch(error) {
+                    console.log(error);
+                }
             }
             else {
                 dataToSetToDb = docSnap.data;
