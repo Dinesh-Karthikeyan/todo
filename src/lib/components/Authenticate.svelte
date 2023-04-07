@@ -1,5 +1,5 @@
 <script>
-	import {authHandler} from '../../stores/store'
+	import { authHandler } from '../../stores/store';
 	let email = '';
 	let password = '';
 	let confirmPass = '';
@@ -7,18 +7,22 @@
 	let isNewUser = false;
 	let error = false;
 	function handleSubmit() {
-		if (!isNewUser && email!="" && password != '') {
-			authHandler.login(email, password);
-		}
-		if (isNewUser && confirmPass === password && email != '' && password != '') {
-			authHandler.signin(email, password);
-		}
-		else {
-			error = true;
-			return
+		try {
+			if (!isNewUser && email != '' && password != '') {
+				authHandler.login(email, password);
+			}
+			if (isNewUser && confirmPass === password && email != '' && password != '') {
+				authHandler.signin(email, password);
+			} else {
+				error = true;
+				return;
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	}
 </script>
+
 <div class="authContainer">
 	<h1>{isNewUser ? 'Sign UP' : 'Log IN'}</h1>
 	{#if error}
@@ -64,9 +68,7 @@
 		{#if isNewUser}
 			<div>
 				<p>Already have an account?</p>
-				<p on:click={() => isNewUser = false} on:keydown={() => {}}>
-					Log IN
-				</p>
+				<p on:click={() => (isNewUser = false)} on:keydown={() => {}}>Log IN</p>
 			</div>
 		{:else}
 			<div>
@@ -118,7 +120,7 @@
 		border-radius: 5px;
 	}
 	form label:focus-within {
-        border: 2px solid blue;
+		border: 2px solid blue;
 	}
 	button {
 		border: none;
