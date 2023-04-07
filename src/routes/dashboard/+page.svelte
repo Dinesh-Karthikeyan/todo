@@ -1,6 +1,6 @@
 <script>
 	import ShortUniqueId from 'short-unique-id';
-	// import {authStore} from '../../stores/store'
+	import {authStore, authHandler} from '../../stores/store'
 	const uid = new ShortUniqueId();
 
 	let task = '';
@@ -82,6 +82,9 @@
 				</div>
 			{/each}
 		</div>
+		<button on:click={authHandler.signout()}>
+			Log OUT
+		</button>
 	</div>
 </main>
 
