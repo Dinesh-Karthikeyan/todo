@@ -6,9 +6,14 @@
 	let task = '';
 	// let todos  = $authStore.data.todo;
 	let todos = [];
+	const unsubscribe = authStore.subscribe(val => {
+		if (val.data.todo) {
+			todos = val.data.todo;
+		}
+	})
 	// $: $authStore.data.todo = todos
-	
-	function addTask(event) {
+	console.log($authStore.data.todo)	
+	async function addTask(event) {
 		if (event.key === 'Enter') {
 			const todoTask = {
 				task: task,
@@ -18,11 +23,12 @@
 			todos = [todoTask, ...todos];
 			// $authStore.data.todo = todos;
 			task = '';
-			dbHandler.updateDoc('users',$authStore.user.uid, {todos})
+			const todo = todos;
+			await dbHandler.updateDoc('users',$authStore.user.uid, {todo})
 		}
 	}
 	
-	function handleAdd() {
+	async function handleAdd() {
 		const todoTask = {
 			task: task,
 			done: false,
@@ -30,7 +36,8 @@
 		};
 		todos = [todoTask, ...todos];
 		task = '';
-		dbHandler.updateDoc('users',$authStore.user.uid, {todos})
+		const todo = todos;
+		await dbHandler.updateDoc('users',$authStore.user.uid, {todo})
 	}
 	function deletItem(id) {
 		todos = todos.filter((item) => item.id != id);
