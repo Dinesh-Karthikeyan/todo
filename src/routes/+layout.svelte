@@ -18,34 +18,33 @@
 
 			if (!user) return;
 
-			console.log(user.email);
-			let dataToSetToDb;
-			const docRef = doc(db, 'users', user.uid);
-			const docSnap = await getDoc(db, docRef);
-			if (!docSnap) {
-				const userRef = doc(db, 'user', user.uid);
-				dataToSetToDb = {
-					email: user.email,
-					todo: []
-				};
-				try {
-					console.log('new data.....');
-					await setDoc(userRef, dataToSetToDb);
-					console.log('done setting new data');
-				} catch (error) {
-					console.log(error);
-				}
-			} else {
-				dataToSetToDb = docSnap.data;
-			}
-			authStore.update((curr) => {
-				return {
-					...curr,
-					user,
-					loading: false,
-					data: dataToSetToDb
-				};
-			});
+            let dataToSetToDb;
+            let docSnap;
+            try {
+                docSnap = await getDoc(db, docRef);
+            } catch (error) {
+                console.log(error)
+            }
+            const docRef = doc(db,'users',user.uid);
+            if(!docSnap) {
+                const userRef = doc(db, 'user', user.uid);
+                dataToSetToDb = {
+                    email:user.email,
+                    todo: []
+                }
+                await setDoc(userRef, dataToSetToDb)
+            }
+            else {
+                dataToSetToDb = docSnap.data;
+            }
+            authStore.update(curr => {
+                return {
+                    ...curr,
+                    user,
+                    loading:false,
+                    data:dataToSetToDb
+                }
+            });
 		});
 	});
 </script>
