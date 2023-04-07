@@ -29,7 +29,7 @@
                 await setDoc(docRef, dataToSetToDb)
             }
             else {
-                dataToSetToDb = docSnap.data;
+                dataToSetToDb = docSnap.data();
             }
             authStore.update(curr => {
                 return {
