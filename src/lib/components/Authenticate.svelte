@@ -6,13 +6,13 @@
 
 	let isNewUser = false;
 	let error = false;
-	function handleSubmit() {
+	async function handleSubmit() {
 		try {
 			if (!isNewUser && email != '' && password != '') {
-				authHandler.login(email, password);
+				await authHandler.login(email, password);
 			}
 			if (isNewUser && confirmPass === password && email != '' && password != '') {
-				authHandler.signin(email, password);
+				await authHandler.signin(email, password);
 			} else {
 				error = true;
 				return;
