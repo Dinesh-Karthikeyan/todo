@@ -18,7 +18,7 @@
 			todos = [todoTask, ...todos];
 			// $authStore.data.todo = todos;
 			task = '';
-			dbHandler.updateDoc('users',$authStore.user.uid, $authStore.data.todo)
+			dbHandler.updateDoc('users',$authStore.user.uid, {todos})
 		}
 	}
 	
@@ -30,7 +30,7 @@
 		};
 		todos = [todoTask, ...todos];
 		task = '';
-		dbHandler.updateDoc('users',$authStore.user.uid, $authStore.data.todo)
+		dbHandler.updateDoc('users',$authStore.user.uid, {todos})
 	}
 	function deletItem(id) {
 		todos = todos.filter((item) => item.id != id);
