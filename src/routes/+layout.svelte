@@ -19,13 +19,13 @@
 			if (!user) return;
 
             let dataToSetToDb;
+            const docRef = doc(db,'users',user.uid);
             let docSnap;
             try {
                 docSnap = await getDoc(db, docRef);
             } catch (error) {
                 console.log(error)
             }
-            const docRef = doc(db,'users',user.uid);
             if(!docSnap) {
                 dataToSetToDb = {
                     email:user.email,
