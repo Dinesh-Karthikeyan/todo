@@ -1,10 +1,13 @@
 <script>
 	import ShortUniqueId from 'short-unique-id';
+	import {authStore} from '../../stores/store'
 	const uid = new ShortUniqueId();
 
 	let task = '';
-	let todos = [];
+	let todos  = $authStore.data.todo;
 
+	$: $authStore.data.todo = todos
+	
 	function addTask(event) {
 		if (event.key === 'Enter') {
 			const todoTask = {
@@ -13,6 +16,7 @@
 				id: uid()
 			};
 			todos = [todoTask, ...todos];
+			$authStore.data.todo = todos;
 			task = '';
 		}
 	}
