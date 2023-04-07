@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { auth, db } from '$lib/firebase/firebase';
-    import {doc, getDoc, setDoc} from 'firebase/firestore';
+    import {connectFirestoreEmulator, doc, getDoc, setDoc} from 'firebase/firestore';
 	import {authStore} from '../stores/store'
     const nonAuthRoutes = ['/'];
 	onMount(() => {
@@ -20,8 +20,13 @@
             
             console.log(user.email);
             let dataToSetToDb;
+            let docSnap;
+            try {
+                docSnap = await getDoc(db, docRef);
+            } catch (error) {
+                console.log(error)
+            }
             const docRef = doc(db,'users',user.uid);
-            const docSnap = await getDoc(db, docRef);
             if(!docSnap) {
                 const userRef = doc(db, 'user', user.uid);
                 dataToSetToDb = {
