@@ -82,9 +82,7 @@
 				</div>
 			{/each}
 		</div>
-		<button on:click={authHandler.signout()}>
-			Log OUT
-		</button>
+		<div on:click={()=>{authHandler.signout()}} on:keydown={()=>{}}>Log OUT</div>
 	</div>
 </main>
 
