@@ -1,18 +1,17 @@
 <script>
 	import ShortUniqueId from 'short-unique-id';
-	import {authStore, authHandler, dbHandler} from '../../stores/store'
+	import { authStore, authHandler, dbHandler } from '../../stores/store';
+	import { onDestroy } from 'svelte';
 	const uid = new ShortUniqueId();
 
 	let task = '';
-	// let todos  = $authStore.data.todo;
 	let todos = [];
-	const unsubscribe = authStore.subscribe(val => {
+	const unsubscribe = authStore.subscribe((val) => {
 		if (val.data.todo) {
 			todos = val.data.todo;
 		}
-	})
-	// $: $authStore.data.todo = todos
-	console.log($authStore.data.todo)	
+	});
+
 	async function addTask(event) {
 		if (event.key === 'Enter') {
 			const todoTask = {
@@ -24,7 +23,7 @@
 			// $authStore.data.todo = todos;
 			task = '';
 			const todo = todos;
-			await dbHandler.updateDoc('users',$authStore.user.uid, {todo})
+			await dbHandler.updateDoc('users', $authStore.user.uid, { todo });
 		}
 	}
 	
@@ -37,10 +36,11 @@
 		todos = [todoTask, ...todos];
 		task = '';
 		const todo = todos;
-		await dbHandler.updateDoc('users',$authStore.user.uid, {todo})
+		await dbHandler.updateDoc('users', $authStore.user.uid, { todo });
 	}
-	function deletItem(id) {
+	async function deletItem(id) {
 		todos = todos.filter((item) => item.id != id);
+		await dbHandler.updateDoc('users', $authStore.user.uid ,{todo:todos})
 	}
 	function doEdit(id) {
 		todos.forEach((item) => {
@@ -50,6 +50,7 @@
 		});
 		deletItem(id);
 	}
+	onDestroy(unsubscribe);
 </script>
 
 <main>
@@ -90,8 +91,12 @@
 					</span>
 				</div>
 			{/each}
+			
+			<div class="logout" on:click={() => {authHandler.signout()}} on:keydown={() => {}} >
+				Log OUT
+			</div>
+		
 		</div>
-		<div on:click={()=>{authHandler.signout()}} on:keydown={()=>{}}>Log OUT</div>
 	</div>
 </main>
 
@@ -116,26 +121,44 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		border-radius:5px;
+		border-radius: 5px;
 		width: 500px;
 	}
-	input:focus, input {
+	input:focus,
+	input {
 		outline: none;
-		border:none;
+		border: none;
 		width: 100%;
 		font-size: 1.3rem;
 	}
 	img {
-		height:  25px;
-		width: auto ;
+		height: 25px;
+		width: auto;
 	}
 	.todoBlock {
-		margin-top:20px;
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		flex: 1;
 	}
 	.task {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		margin: 10px;
+	}
+	.logout {
+		display: flex;
+		justify-content: center;
+		align-items:center;
+		font-size: 2rem;
+		border: 1px solid black;
+		border-radius: 5px;
+		padding: 5px;
+	}
+	.logout:hover {
+		background-color: black;
+		color: white;
 	}
 </style>
