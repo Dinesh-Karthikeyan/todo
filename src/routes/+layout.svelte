@@ -21,12 +21,7 @@
             console.log(user.email);
             let dataToSetToDb;
             const docRef = doc(db,'users',user.uid);
-            let docSnap;
-            try {
-                docSnap = await getDoc(db, docRef);
-            } catch (error) {
-                console.log(error)
-            }
+            const docSnap = await getDoc(docRef);
             if(!docSnap) {
                 dataToSetToDb = {
                     email:user.email,
@@ -35,7 +30,7 @@
                 await setDoc(docRef, dataToSetToDb)
             }
             else {
-                dataToSetToDb = docSnap.data;
+                dataToSetToDb = docSnap.data();
             }
             authStore.update(curr => {
                 return {
