@@ -14,6 +14,9 @@
 
 	$: $authStore.data.todo = todos;
 
+	async function updateFirestoreTodo() {
+		await dbHandler.updateDoc('users', $authStore.user.uid, {todo:todos})
+	}
 	async function addTask(event) {
 		if (event.key === 'Enter') {
 			const todoTask = {
@@ -24,8 +27,7 @@
 			todos = [todoTask, ...todos];
 			$authStore.data.todo = todos;
 			task = '';
-			const todo = todos;
-			await dbHandler.updateDoc('users', $authStore.user.uid, { todo });
+			await updateFirestoreTodo();
 		}
 	}
 
@@ -37,12 +39,11 @@
 		};
 		todos = [todoTask, ...todos];
 		task = '';
-		const todo = todos;
-		await dbHandler.updateDoc('users', $authStore.user.uid, { todo });
+		await updateFirestoreTodo();
 	}
 	async function deletItem(id) {
 		todos = todos.filter((item) => item.id != id);
-		await dbHandler.updateDoc('users', $authStore.user.uid ,{todo:todos})
+		await updateFirestoreTodo();
 	}
 	function doEdit(id) {
 		todos.forEach((item) => {
@@ -69,7 +70,7 @@
 		<div class="todoBlock">
 			{#each todos as todo (todo.id)}
 				<div class="task">
-					<span on:click={() => (todo.done = !todo.done)} on:keydown={() => {}}>
+					<span on:click={async() => {todo.done = !todo.done; await updateFirestoreTodo();}} on:keydown={() => {}}>
 						{todo.done ? '✔️' : '[ ]'}
 					</span>
 					<span>{todo.task}</span>
