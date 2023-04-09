@@ -6,7 +6,6 @@
 	const nonAuthRoutes = ['/'];
 	onMount(() => {
 		const unsubscribe = auth.onAuthStateChanged(async (user) => {
-			console.log(user)
 			const currentPath = window.location.pathname;
 			if (!user && !nonAuthRoutes.includes(currentPath)) {
 				window.location.href = '/';
@@ -18,24 +17,18 @@
 			}
 
 			if (!user) return;
-			console.log("reading data......")
             let dataToSetToDb;
             const docRef = doc(db,'users',user.uid);
             const docSnap = await getDoc(docRef);
-			console.log("done reading data")
-			console.log(docSnap)
 			if(!docSnap.data()) {
                 dataToSetToDb = {
                     email:user.email,
                     todo: []
                 }
                 // await setDoc(docRef, dataToSetToDb)
-				console.log("setting data")
 				await dbHandler.setDoc('users', user.uid, dataToSetToDb);
             }
             else {
-				console.log("inside else")
-				console.log(docSnap.data())
                 dataToSetToDb = docSnap.data();
             }
             authStore.update(curr => {
