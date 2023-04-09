@@ -3,7 +3,6 @@
 	import { authStore, authHandler, dbHandler } from '../../stores/store';
 	import { onDestroy } from 'svelte';
 	const uid = new ShortUniqueId();
-
 	let task = '';
 	let todos = [];
 	const unsubscribe = authStore.subscribe((val) => {
